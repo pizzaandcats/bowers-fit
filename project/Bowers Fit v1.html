@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Bowers Fit — Personalized training for getting strong</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F4F3EF;
+    --bg-alt: #ECEAE4;
+    --ink: #111111;
+    --ink-2: #2A2A2A;
+    --ink-3: #5A5A57;
+    --ink-4: #8A8A85;
+    --line: rgba(17, 17, 17, 0.12);
+    --line-strong: rgba(17, 17, 17, 0.22);
+    --accent: #D9531E;    /* warm burnt orange */
+    --accent-ink: #FFFFFF;
+    --dark: #111111;
+    --dark-ink: #F4F3EF;
+    --max: 1320px;
+    --pad: 40px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Geist', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: "ss01", "cv01", "cv11";
+    font-weight: 400;
+    line-height: 1.45;
+    letter-spacing: -0.005em;
+  }
+
+  ::selection { background: var(--accent); color: #fff; }
+
+  .container {
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 0 var(--pad);
+  }
+
+  /* ───── NAV ───── */
+  nav.site {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--bg);
+    border-bottom: 1px solid var(--line);
+    backdrop-filter: saturate(180%) blur(8px);
+  }
+  nav.site .row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 68px;
+  }
+  .wordmark {
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .wordmark .dot {
+    width: 8px; height: 8px;
+    background: var(--accent);
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  /* ───── BUTTONS ───── */
+  .btn {
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    padding: 12px 22px;
+    border-radius: 999px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.18s ease;
+    background: transparent;
+    color: var(--ink);
+    line-height: 1;
+  }
+  .btn .arrow {
+    display: inline-block;
+    width: 14px; height: 14px;
+    position: relative;
+    transition: transform 0.2s ease;
+  }
+  .btn .arrow::before {
+    content: ""; position: absolute;
+    top: 50%; left: 0; right: 2px;
+    height: 1.5px; background: currentColor;
+    transform: translateY(-50%);
+  }
+  .btn .arrow::after {
+    content: ""; position: absolute;
+    top: 50%; right: 0;
+    width: 7px; height: 7px;
+    border-top: 1.5px solid currentColor;
+    border-right: 1.5px solid currentColor;
+    transform: translateY(-50%) rotate(45deg);
+    transform-origin: center;
+  }
+  .btn:hover .arrow { transform: translateX(3px); }
+
+  .btn-primary {
+    background: var(--accent);
+    color: var(--accent-ink);
+  }
+  .btn-primary:hover { background: #B8431A; }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--ink);
+    border-color: var(--line-strong);
+  }
+  .btn-ghost:hover { border-color: var(--ink); }
+
+  .btn-dark {
+    background: #F4F3EF;
+    color: var(--ink);
+  }
+  .btn-dark:hover { background: #fff; }
+
+  .btn-sm { padding: 9px 16px; font-size: 13px; }
+  .btn-lg { padding: 16px 28px; font-size: 15px; }
+
+  /* ───── TYPE ───── */
+  .eyebrow {
+    font-family: 'Geist Mono', ui-monospace, monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+  .eyebrow .num {
+    color: var(--ink);
+    margin-right: 12px;
+  }
+
+  .display {
+    font-size: clamp(48px, 7.2vw, 108px);
+    line-height: 0.98;
+    letter-spacing: -0.035em;
+    font-weight: 500;
+    color: var(--ink);
+    text-wrap: balance;
+  }
+  .display-md {
+    font-size: clamp(36px, 4.4vw, 64px);
+    line-height: 1.02;
+    letter-spacing: -0.028em;
+    font-weight: 500;
+    text-wrap: balance;
+  }
+  h2.section-title {
+    font-size: clamp(36px, 4.4vw, 64px);
+    line-height: 1.02;
+    letter-spacing: -0.028em;
+    font-weight: 500;
+    text-wrap: balance;
+  }
+
+  .lead {
+    font-size: clamp(18px, 1.45vw, 22px);
+    line-height: 1.4;
+    color: var(--ink-2);
+    font-weight: 400;
+    letter-spacing: -0.012em;
+    max-width: 38ch;
+    text-wrap: pretty;
+  }
+  .body-lg {
+    font-size: 17px;
+    line-height: 1.55;
+    color: var(--ink-2);
+    text-wrap: pretty;
+  }
+  .body {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--ink-3);
+    text-wrap: pretty;
+  }
+
+  /* ───── HERO ───── */
+  section.hero {
+    padding: 80px 0 120px;
+    border-bottom: 1px solid var(--line);
+    position: relative;
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 64px;
+  }
+  .hero h1 { margin-top: 32px; max-width: 18ch; }
+  .hero-bottom {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: end;
+    margin-top: 72px;
+  }
+  .hero-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    align-items: flex-start;
+  }
+  .hero-meta-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    color: var(--ink-3);
+    font-size: 13px;
+  }
+  .hero-meta-row .swatch {
+    width: 10px; height: 10px;
+    background: var(--accent);
+    border-radius: 50%;
+  }
+  .hero-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 7px 14px 7px 11px;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    font-size: 12px;
+    color: var(--ink-2);
+    font-family: 'Geist Mono', ui-monospace, monospace;
+    letter-spacing: 0.02em;
+  }
+  .hero-status .pulse {
+    width: 8px; height: 8px;
+    background: var(--accent);
+    border-radius: 50%;
+    position: relative;
+  }
+  .hero-status .pulse::after {
+    content: "";
+    position: absolute; inset: -4px;
+    border-radius: 50%;
+    border: 1.5px solid var(--accent);
+    opacity: 0.5;
+    animation: pulse 2s ease-out infinite;
+  }
+  @keyframes pulse {
+    0% { transform: scale(0.6); opacity: 0.6; }
+    100% { transform: scale(1.8); opacity: 0; }
+  }
+
+  /* ───── SECTION SCAFFOLD ───── */
+  section.block {
+    padding: 120px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .section-head {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 64px;
+    margin-bottom: 80px;
+    align-items: start;
+  }
+  .section-head .left {
+    position: sticky;
+    top: 100px;
+  }
+  .section-head h2 { max-width: 16ch; }
+
+  /* ───── CLIENT TYPES ───── */
+  .client-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border-top: 1px solid var(--line-strong);
+    border-bottom: 1px solid var(--line-strong);
+  }
+  .client-card {
+    padding: 56px 48px 56px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    min-height: 440px;
+    position: relative;
+  }
+  .client-card + .client-card {
+    padding-left: 48px;
+    border-left: 1px solid var(--line);
+  }
+  .client-card .num {
+    font-family: 'Geist Mono', ui-monospace, monospace;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    font-weight: 500;
+  }
+  .client-card h3 {
+    font-size: clamp(40px, 4vw, 56px);
+    line-height: 1;
+    letter-spacing: -0.028em;
+    font-weight: 500;
+  }
+  .client-card .desc {
+    font-size: 17px;
+    line-height: 1.5;
+    color: var(--ink-2);
+    max-width: 36ch;
+  }
+  .client-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: auto;
+    padding-top: 32px;
+  }
+  .tag {
+    font-size: 12px;
+    padding: 6px 12px;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    color: var(--ink-2);
+    font-weight: 400;
+    letter-spacing: -0.005em;
+  }
+
+  /* ───── HOW IT WORKS ───── */
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border-top: 1px solid var(--line-strong);
+  }
+  .step {
+    padding: 48px 32px 48px 0;
+    border-right: 1px solid var(--line);
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    min-height: 320px;
+  }
+  .step:nth-child(n+2) { padding-left: 32px; }
+  .step:last-child { border-right: none; padding-right: 0; }
+  .step-num {
+    font-family: 'Geist Mono', ui-monospace, monospace;
+    font-size: 12px;
+    color: var(--ink-3);
+    letter-spacing: 0.1em;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .step-num::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--line);
+  }
+  .step h3 {
+    font-size: 28px;
+    font-weight: 500;
+    letter-spacing: -0.022em;
+    line-height: 1.05;
+  }
+  .step p {
+    font-size: 16px;
+    line-height: 1.55;
+    color: var(--ink-2);
+    margin-top: auto;
+    max-width: 32ch;
+  }
+
+  /* ───── ABOUT ───── */
+  section.about {
+    padding: 140px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 96px;
+    align-items: start;
+  }
+  .about-left h2 {
+    font-size: clamp(40px, 4.8vw, 72px);
+    line-height: 0.98;
+    letter-spacing: -0.03em;
+    font-weight: 500;
+    margin-bottom: 32px;
+  }
+  .about-meta {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+    border-top: 1px solid var(--line);
+    margin-top: 32px;
+  }
+  .about-meta-row {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 24px;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--line);
+    font-size: 14px;
+    align-items: baseline;
+  }
+  .about-meta-row .label {
+    font-family: 'Geist Mono', ui-monospace, monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ink-3);
+  }
+  .about-meta-row .value { color: var(--ink); font-weight: 400; }
+
+  .about-body {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding-top: 8px;
+  }
+  .about-body p {
+    font-size: 18px;
+    line-height: 1.55;
+    color: var(--ink-2);
+    text-wrap: pretty;
+  }
+  .about-body p:first-child {
+    font-size: 22px;
+    line-height: 1.4;
+    color: var(--ink);
+    letter-spacing: -0.012em;
+    text-wrap: balance;
+  }
+
+  /* ───── CTA BAND ───── */
+  section.cta {
+    background: var(--dark);
+    color: var(--dark-ink);
+    padding: 140px 0;
+  }
+  .cta-grid {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 80px;
+    align-items: end;
+  }
+  .cta h2 {
+    font-size: clamp(48px, 6.4vw, 96px);
+    line-height: 0.98;
+    letter-spacing: -0.032em;
+    font-weight: 500;
+    color: var(--dark-ink);
+    max-width: 16ch;
+  }
+  .cta .note {
+    font-family: 'Geist Mono', ui-monospace, monospace;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    color: rgba(244, 243, 239, 0.55);
+    margin-top: 24px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .cta .note .swatch {
+    width: 8px; height: 8px;
+    background: var(--accent);
+    border-radius: 50%;
+  }
+  .cta-right {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-end;
+  }
+  .cta-counter {
+    font-family: 'Geist Mono', ui-monospace, monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(244, 243, 239, 0.5);
+  }
+
+  /* ───── FOOTER ───── */
+  footer.site {
+    background: var(--bg);
+    padding: 40px 0 40px;
+  }
+  .footer-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+  }
+  .footer-links {
+    display: flex;
+    gap: 28px;
+    align-items: center;
+  }
+  .footer-links a {
+    color: var(--ink-2);
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.15s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .footer-links a:hover { color: var(--accent); }
+  .footer-links a .ext {
+    width: 9px; height: 9px;
+    position: relative;
+    display: inline-block;
+    opacity: 0.5;
+  }
+  .footer-links a .ext::before,
+  .footer-links a .ext::after {
+    content: ""; position: absolute;
+    background: currentColor;
+  }
+  .footer-links a .ext::before {
+    top: 0; right: 0; width: 7px; height: 1px;
+  }
+  .footer-links a .ext::after {
+    top: 0; right: 0; width: 1px; height: 7px;
+  }
+  .footer-meta {
+    border-top: 1px solid var(--line);
+    margin-top: 40px;
+    padding-top: 24px;
+    display: flex;
+    justify-content: space-between;
+    font-family: 'Geist Mono', ui-monospace, monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-4);
+  }
+
+  /* ───── RESPONSIVE ───── */
+  @media (max-width: 900px) {
+    :root { --pad: 24px; }
+    section.block, section.about { padding: 80px 0; }
+    section.hero { padding: 56px 0 80px; }
+    section.cta { padding: 96px 0; }
+    .section-head { grid-template-columns: 1fr; gap: 32px; margin-bottom: 48px; }
+    .section-head .left { position: static; }
+    .hero-bottom { grid-template-columns: 1fr; gap: 32px; margin-top: 48px; }
+    .client-grid { grid-template-columns: 1fr; }
+    .client-card { padding: 40px 0; min-height: 0; }
+    .client-card + .client-card {
+      padding-left: 0;
+      border-left: none;
+      border-top: 1px solid var(--line);
+    }
+    .steps { grid-template-columns: 1fr; }
+    .step {
+      border-right: none;
+      border-bottom: 1px solid var(--line);
+      padding: 32px 0;
+      min-height: 0;
+    }
+    .step:nth-child(n+2) { padding-left: 0; }
+    .step:last-child { border-bottom: none; }
+    .about-grid { grid-template-columns: 1fr; gap: 48px; }
+    .cta-grid { grid-template-columns: 1fr; gap: 40px; align-items: start; }
+    .cta-right { align-items: flex-start; }
+    .footer-row { flex-direction: column; align-items: flex-start; gap: 20px; }
+  }
+</style>
+</head>
+<body data-screen-label="Bowers Fit Home">
+
+  <!-- NAV -->
+  <nav class="site">
+    <div class="container row">
+      <a href="#" class="wordmark">
+        <span class="dot"></span>
+        Bowers Fit
+      </a>
+      <a href="#apply" class="btn btn-primary btn-sm">
+        Apply
+        <span class="arrow"></span>
+      </a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container hero-grid">
+      <div>
+        <div class="hero-status">
+          <span class="pulse"></span>
+          Now accepting applications — Summer 2026
+        </div>
+        <h1 class="display">Apply when you're ready to get strong.</h1>
+      </div>
+
+      <div class="hero-bottom">
+        <div>
+          <p class="lead">Personalized training plans for building muscle and losing fat.</p>
+        </div>
+        <div class="hero-meta">
+          <a href="#apply" class="btn btn-primary btn-lg">
+            Apply Now
+            <span class="arrow"></span>
+          </a>
+          <div class="hero-meta-row">
+            <span class="swatch"></span>
+            Read personally by Marek Bowers, CPT
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLIENT TYPES -->
+  <section class="block" id="who">
+    <div class="container">
+      <div class="section-head">
+        <div class="left">
+          <div class="eyebrow"><span class="num">01</span>Who I work with</div>
+        </div>
+        <h2 class="section-title">Two kinds of work. Same standard.</h2>
+      </div>
+
+      <div class="client-grid">
+        <div class="client-card">
+          <span class="num">A / Rebuild</span>
+          <h3>Rebuild</h3>
+          <p class="desc">Post GLP-1, bariatric, or significant weight loss. Build back the muscle you lost, and get ready for what's next — a race, a trip, a climb.</p>
+          <div class="client-tags">
+            <span class="tag">Post-GLP-1</span>
+            <span class="tag">Post-bariatric</span>
+            <span class="tag">Strength return</span>
+            <span class="tag">Event prep</span>
+          </div>
+        </div>
+        <div class="client-card">
+          <span class="num">B / Transform</span>
+          <h3>Transform</h3>
+          <p class="desc">Lose weight and build muscle simultaneously. A long, deliberate process for people who want it done properly — not a six-week sprint.</p>
+          <div class="client-tags">
+            <span class="tag">Body recomposition</span>
+            <span class="tag">Sustainable fat loss</span>
+            <span class="tag">Strength gains</span>
+            <span class="tag">Long arc</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="block" id="how">
+    <div class="container">
+      <div class="section-head">
+        <div class="left">
+          <div class="eyebrow"><span class="num">02</span>How it works</div>
+        </div>
+        <h2 class="section-title">Three steps. No app to download.</h2>
+      </div>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">Step 01</div>
+          <h3>Apply.</h3>
+          <p>Tell me about your goals, your history, your week. I read every application personally. If we're a fit, I'll write back.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">Step 02</div>
+          <h3>Get your plan.</h3>
+          <p>Custom training built around your schedule, your equipment, and your body. Not a template. Not a guess.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">Step 03</div>
+          <h3>Check in weekly.</h3>
+          <p>A real 1:1 conversation every week. We look at what happened, talk through it, and adjust as you get stronger.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about" id="about">
+    <div class="container">
+      <div class="section-head" style="margin-bottom: 64px;">
+        <div class="left">
+          <div class="eyebrow"><span class="num">03</span>About</div>
+        </div>
+        <div></div>
+      </div>
+
+      <div class="about-grid">
+        <div class="about-left">
+          <h2>Marek Bowers.<br/>Coach, not influencer.</h2>
+          <div class="about-meta">
+            <div class="about-meta-row">
+              <span class="label">Cert.</span>
+              <span class="value">Certified Personal Trainer (CPT)</span>
+            </div>
+            <div class="about-meta-row">
+              <span class="label">Founder</span>
+              <span class="value">Rawlogy</span>
+            </div>
+            <div class="about-meta-row">
+              <span class="label">Format</span>
+              <span class="value">Virtual coaching, 1:1</span>
+            </div>
+            <div class="about-meta-row">
+              <span class="label">Roster</span>
+              <span class="value">A small number of clients at a time</span>
+            </div>
+            <div class="about-meta-row">
+              <span class="label">Specialty</span>
+              <span class="value">Midlife women · Outdoor performance · GLP-1 rebuilding</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="about-body">
+          <p>I work with a small number of clients at a time. That's the whole model.</p>
+          <p>Coaching is virtual, but it isn't automated. There's no app feeding you a generic plan. You write to a person. The plan you get was written for you, by name. The check-in every week is a real conversation, not a chatbot prompt.</p>
+          <p>My specialty is midlife women rebuilding strength, people training for outdoor performance — a climb, a trip, a long ride — and clients coming off GLP-1s who want their muscle back.</p>
+          <p>If that's the work you want to do, apply.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA BAND -->
+  <section class="cta" id="apply">
+    <div class="container cta-grid">
+      <div>
+        <h2>Apply when you're ready to get strong.</h2>
+        <div class="note">
+          <span class="swatch"></span>
+          Spots are limited. Roster opens as clients finish their cycles.
+        </div>
+      </div>
+      <div class="cta-right">
+        <div class="cta-counter">Roster · Summer 2026</div>
+        <a href="#" class="btn btn-dark btn-lg">
+          Apply Now
+          <span class="arrow"></span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site">
+    <div class="container">
+      <div class="footer-row">
+        <a href="#" class="wordmark">
+          <span class="dot"></span>
+          Bowers Fit
+        </a>
+        <div class="footer-links">
+          <a href="#">Writing <span class="ext"></span></a>
+          <a href="#">Rawlogy <span class="ext"></span></a>
+        </div>
+      </div>
+      <div class="footer-meta">
+        <span>© 2026 Bowers Fit</span>
+        <span>Coaching by Marek Bowers, CPT</span>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
