@@ -319,6 +319,14 @@
     line-height: 1;
     letter-spacing: -0.028em;
     font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .card-icon {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
   }
   .client-card .desc {
     font-size: 16px;
@@ -693,15 +701,32 @@
 
       <div class="client-grid">
         <div class="client-card">
-          <h3>Rebuild</h3>
+          <h3>
+            <svg class="card-icon" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <rect x="8" y="0" width="14" height="14" fill="black"/>
+              <rect x="0" y="16" width="14" height="14" fill="black"/>
+              <rect x="16" y="16" width="14" height="14" fill="black"/>
+            </svg>
+            Rebuild
+          </h3>
           <p class="desc">For clients coming off GLP-1s, bariatric surgery, or major weight loss, the work is building back the muscle you lost and getting strong again. Training includes compound lifts, bodyweight progressions, and walking with weight (rucking).</p>
         </div>
         <div class="client-card">
-          <h3>Transform</h3>
+          <h3>
+            <svg class="card-icon" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M15 0L30 15L15 30L0 15Z" fill="black"/>
+            </svg>
+            Transform
+          </h3>
           <p class="desc">For clients who want to lose fat and build muscle simultaneously, this is consistent strength training with bodyweight, kettlebells, or gym weights, paired with sustainable cardio to change your body composition and make it last.</p>
         </div>
         <div class="client-card">
-          <h3>Prepare</h3>
+          <h3>
+            <svg class="card-icon" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M15 1L29 29H1L15 1Z" fill="black"/>
+            </svg>
+            Prepare
+          </h3>
           <p class="desc">For clients training for something specific: a backpacking trip, race, climb. We work backward from the date on the calendar so you show up more than ready. Sport-specific strength work, endurance, and the conditioning your activity actually demands.</p>
         </div>
       </div>
